@@ -1,4 +1,4 @@
-const GEMINI_API_KEY =  process.env.GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_HERE";
+//const GEMINI_API_KEY =  process.env.GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_HERE";
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
 // Comprehensive list of crypto-related keywords
@@ -121,11 +121,13 @@ function calculateTax(message) {
 }
 
 // Fetch response from Gemini API
+
+
 async function fetchGeminiResponse(message) {
     try {
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        const response = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
                     parts: [{
@@ -138,10 +140,10 @@ async function fetchGeminiResponse(message) {
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             return data.candidates[0].content.parts[0].text;
         }
-        return "No valid response from API.";
+        return 'No valid response from Gemini API.';
     } catch (error) {
-        console.error("Gemini API error:", error);
-        return "Error fetching response. Please check and try again later.";
+        console.error('Gemini API error:', error);
+        return 'Error fetching response from Gemini API. Please try again later.';
     }
 }
 
